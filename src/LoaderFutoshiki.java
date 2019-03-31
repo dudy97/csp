@@ -8,12 +8,14 @@ public class LoaderFutoshiki {
     ArrayList<Integer> numbers;
     ArrayList<String> lines;
     ArrayList<Limitation> limitations;
+    ArrayList<Integer> setNumbers;
 
     public LoaderFutoshiki(){
         size = 0;
         numbers = new ArrayList<>();
         lines = new ArrayList<>();
         limitations = new ArrayList<>();
+        setNumbers = new ArrayList<>();
     }
 
     public void readFromFile(String fileName){
@@ -34,8 +36,11 @@ public class LoaderFutoshiki {
         size = Integer.parseInt(lines.get(0));
         for(int i = 2; i < 2 + size; i++){
             String[] s = lines.get(i).split(";");
-            for(int j = 0; j<s.length; j++)
+            for(int j = 0; j<s.length; j++) {
                 numbers.add(Integer.valueOf(s[j]));
+                if(Integer.valueOf(s[j])!= 0)
+                    setNumbers.add(j);
+            }
         }
         for(int i = 3 + size; i < lines.size(); i++){
             String[] s = lines.get(i).split(";");
@@ -54,6 +59,9 @@ public class LoaderFutoshiki {
                     case 'D':
                         smaller = Character.getNumericValue(temp.charAt(1)) + 3*size - 1;
                         break;
+                    case 'E':
+                        smaller = Character.getNumericValue(temp.charAt(1)) + 4*size - 1;
+                        break;
                 }
                 temp = s[1];
             switch (s[1].charAt(0)){
@@ -69,6 +77,9 @@ public class LoaderFutoshiki {
                 case 'D':
                     bigger = Character.getNumericValue(temp.charAt(1)) + 3*size - 1;
                     break;
+                case 'E':
+                    bigger = Character.getNumericValue(temp.charAt(1)) + 4*size - 1;
+                    break;
             }
             limitations.add(new Limitation(smaller, bigger));
                 smaller = 0;
@@ -77,6 +88,7 @@ public class LoaderFutoshiki {
 //        System.out.println("Size = " + size);
 //        System.out.println(numbers);
 //        System.out.println(limitations);
+//        System.out.println(setNumbers);
 
     }
 
