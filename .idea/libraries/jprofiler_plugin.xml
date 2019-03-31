@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jprofiler-plugin">
+    <CLASSES>
+      <root url="jar://D:/Pobrane/JProfiler/lib/jprofiler-plugin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
