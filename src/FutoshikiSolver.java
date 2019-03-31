@@ -16,12 +16,24 @@ public class FutoshikiSolver {
     public void solve() {
         boolean goBack = false;
         int i = 0;
+        int backs = 0;
+        int iter = 0;
         while( i < board.size()) {
+            iter++;
             if (board.get(i) == 0 || goBack) {
+                if(setNumbers.contains(i) && !goBack){
+                    i++;
+                }
+                else if(setNumbers.contains(i) && goBack){
+                    i=i-1;
+                    goBack = true;
+                }
                 int startVal = board.get(i)+1;
                 if(startVal > size){
                     board.set(i, 0);
                     i = i - 2;
+                    goBack = true;
+
                 }
                 for (int j = startVal; j <= size; j++) {
                     board.set(i, j);
@@ -30,6 +42,7 @@ public class FutoshikiSolver {
                         break;
                     }
                     if(j==size){
+                        backs++;
                         board.set(i, 0);
                         i = i - 2;
                         goBack = true;
@@ -38,6 +51,8 @@ public class FutoshikiSolver {
             }
             i++;
         }
+        System.out.println(backs);
+        System.out.println(iter);
     }
 
     public boolean checkIfCorrect(int index, int num){
@@ -51,16 +66,6 @@ public class FutoshikiSolver {
             int currIdx = size * row + i;
             if (board.get(currIdx) == num && currIdx != index)
                 return false;
-        }
-        if(index==12){
-//            System.out.println("Smaller " + limitations.get(5).smaller);
-//            System.out.println(index);
-//            System.out.println(num);
-//            System.out.println("Bigger " + limitations.get(5).bigger);
-//            System.out.println(board.get(limitations.get(5).bigger));
-//            System.out.println(board.get(limitations.get(5).bigger) != 0);
-            System.out.println((limitations.get(5).smaller == index && num>board.get(limitations.get(5).bigger) && board.get(limitations.get(5).bigger) != 0));
-            System.out.println((limitations.get(5).bigger == index && num < board.get(limitations.get(5).smaller) && board.get(limitations.get(5).smaller) != 0));
         }
         for(int i = 0; i< limitations.size(); i++){
             if((limitations.get(i).bigger == index && num<board.get(limitations.get(i).smaller) && board.get(limitations.get(i).smaller)!= 0) ||
@@ -82,10 +87,14 @@ public class FutoshikiSolver {
 
     public static void main(String[] args) {
         LoaderFutoshiki l = new LoaderFutoshiki();
-        l.readFromFile("D:\\JA\\Intelli_projekty\\si2\\files\\test_futo_5_2.txt");
+        l.readFromFile("D:\\JA\\Intelli_projekty\\si2\\files\\test_futo_7_0.txt");
         l.proceedLines();
         FutoshikiSolver fs = new FutoshikiSolver(l.numbers, l.limitations, l.setNumbers, l.size);
+        long start = System.currentTimeMillis();
         fs.solve();
+        long finish = System.currentTimeMillis();
+        double timeElapsed = (finish - start)/1000.;
+        System.out.println("czas = " + timeElapsed);
         fs.printBoard();
     }
 }

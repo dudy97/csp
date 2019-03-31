@@ -38,8 +38,9 @@ public class LoaderFutoshiki {
             String[] s = lines.get(i).split(";");
             for(int j = 0; j<s.length; j++) {
                 numbers.add(Integer.valueOf(s[j]));
-                if(Integer.valueOf(s[j])!= 0)
-                    setNumbers.add(j);
+                if(Integer.valueOf(s[j])!= 0) {
+                    setNumbers.add(j + (i - 2) * size);
+                }
             }
         }
         for(int i = 3 + size; i < lines.size(); i++){
@@ -82,8 +83,6 @@ public class LoaderFutoshiki {
                     break;
             }
             limitations.add(new Limitation(smaller, bigger));
-                smaller = 0;
-                bigger = 0;
         }
 //        System.out.println("Size = " + size);
 //        System.out.println(numbers);
